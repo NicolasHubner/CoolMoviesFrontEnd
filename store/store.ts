@@ -1,27 +1,27 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { exampleReducer, exampleEpics } from '../redux/slices';
-import { combineEpics, createEpicMiddleware } from 'redux-observable';
+import {configureStore} from '@reduxjs/toolkit';
+import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
+import {movieEpics, MovieReducer} from '@/redux';
+import {combineEpics, createEpicMiddleware} from 'redux-observable';
 import {CreateStoreOptions} from "@/types";
 
-const rootEpic = combineEpics(exampleEpics);
+const rootEpic = combineEpics(movieEpics);
 
-export const createStore = ({ epicDependencies }: CreateStoreOptions): ReturnType<typeof configureStore> => {
-  const epicMiddleware = createEpicMiddleware({
-    dependencies: epicDependencies,
-  });
+export const createStore = ({epicDependencies}: CreateStoreOptions): ReturnType<typeof configureStore> => {
+    const epicMiddleware = createEpicMiddleware({
+        dependencies: epicDependencies,
+    });
 
-  const createdStore = configureStore({
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(epicMiddleware),
-    reducer: {
-      example: exampleReducer,
-    },
-  });
+    const createdStore = configureStore({
+        middleware: (getDefaultMiddleware) =>
+            getDefaultMiddleware().concat(epicMiddleware),
+        reducer: {
+            example: MovieReducer,
+        },
+    });
 
-  epicMiddleware.run(rootEpic);
+    epicMiddleware.run(rootEpic);
 
-  return createdStore;
+    return createdStore;
 };
 
 //@ts-ignore
