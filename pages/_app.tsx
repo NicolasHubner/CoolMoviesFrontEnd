@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app';
 import React, { FC, useState } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import Head from 'next/head';
-import {useApolloClientApi} from "../apollo";
+import {useApolloClientApi} from "@/apollo";
 
 const App: FC<AppProps> = ({ Component, pageProps }) => {
 

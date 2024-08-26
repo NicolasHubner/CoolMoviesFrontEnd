@@ -8,12 +8,14 @@ import {
   Zoom,
 } from '@mui/material';
 import type { NextPage } from 'next';
-import { exampleActions, useAppDispatch, useAppSelector } from '../redux';
+import { exampleActions } from '../redux';
+import {RootState, useAppDispatch, useAppSelector} from "@/store";
 
 const primary = '#1976d2';
 
 const Home: NextPage = () => {
   const dispatch = useAppDispatch();
+
   const exampleState = useAppSelector((state) => state.example);
 
   return (
@@ -51,23 +53,11 @@ const Home: NextPage = () => {
               dispatch(
                 exampleState.fetchData
                   ? exampleActions.clearData()
-                  : exampleActions.fetch()
+                  : exampleActions.fetchMovies()
               )
             }
           >
             {exampleState.fetchData ? 'Hide some data' : 'Fetch some data'}
-          </Button>
-          <Button
-              variant={'outlined'}
-              onClick={() =>
-                  dispatch(
-                      exampleState.fetchData
-                          ? exampleActions.clearData()
-                          : exampleActions.fetch()
-                  )
-              }
-          >
-            Send some data
           </Button>
         </div>
 

@@ -15,7 +15,7 @@ export const slice = createSlice({
   initialState,
   name: 'example',
   reducers: {
-    fetch: () => {},
+    fetchMovies: () => {},
     clearData: (state) => {
       state.fetchData = undefined;
     },
