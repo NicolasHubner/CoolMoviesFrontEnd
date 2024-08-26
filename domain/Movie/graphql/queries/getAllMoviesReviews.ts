@@ -12,7 +12,7 @@ export interface AllMoviesReviewsResponse {
     }
 }
 
-const QUERY_ALL_MOVIES_REVIEWS = gql`
+export const QUERY_ALL_MOVIES_REVIEWS = gql`
     query AllMoviesReviews {
   allMovieReviews {
     nodes {
@@ -21,6 +21,10 @@ const QUERY_ALL_MOVIES_REVIEWS = gql`
       title
       rating
       userReviewerId
+        userByUserReviewerId {
+            name
+            id
+        }
     }
   }
     }
