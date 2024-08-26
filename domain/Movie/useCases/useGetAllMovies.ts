@@ -1,8 +1,9 @@
-import {actions} from "@/redux/slices/movies/slice";
 import {EpicDependencies} from "@/types";
 import {QUERY_ALL_MOVIES, QUERY_ALL_MOVIES_REVIEWS} from "../graphql";
+import {MovieActions} from "@/redux/slices/movies/slice";
 
-interface UseGetAllMovies extends EpicDependencies {}
+interface UseGetAllMovies extends EpicDependencies {
+}
 
 export const useGetAllMovies = async ({client}: UseGetAllMovies) => {
     try {
@@ -10,8 +11,8 @@ export const useGetAllMovies = async ({client}: UseGetAllMovies) => {
             query: QUERY_ALL_MOVIES_REVIEWS,
         });
 
-        return actions.loaded({ data: result.data });
+        return MovieActions.loaded({data: result.data});
     } catch (err) {
-        return actions.loadError();
+        return MovieActions.loadError();
     }
 }
