@@ -12,7 +12,7 @@ export const exampleEpic: Epic = (
 ) =>
     action$.pipe(
         filter(MovieActions.increment.match),
-        filter(() => Boolean(state$.value.example.value % 2)),
+        filter(() => Boolean(state$.value.movies.value % 2)),
         map(() => MovieActions.epicSideEffect())
     );
 
