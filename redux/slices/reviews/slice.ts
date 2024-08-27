@@ -19,7 +19,7 @@ export const ReviewSlice = createSlice({
         },
         // Action when data is successfully loaded
         loaded: (state, action: PayloadAction<{ data: Review[] }>) => {
-            state.fetchData = action.payload.data;
+            state.fetchData = [...state.fetchData, ...action.payload.data] as Review[];
         },
         // Action when there is an error loading data
         loadError: (state) => {
@@ -33,15 +33,9 @@ export const ReviewSlice = createSlice({
         addReview: (state, action: PayloadAction<{ data: Review }>) => {
             state.fetchData = [...state.fetchData, action.payload.data] as Review[];
         },
-        // Action to update a review and show all reviews
         updateReview: (state, action: PayloadAction<{ data: UpdateReview }>) => {
-            state.fetchData = [...state.fetchData.map((review) => {
-                if ((review as Review).id === (action.payload.data as Review).id) {
-                    return action.payload.data;
-                }
-                return review;
-            })] as Review[];
-        },
+            state.fetchData = [...state.fetchData, action.payload.data] as Review[];
+        }
     },
 });
 

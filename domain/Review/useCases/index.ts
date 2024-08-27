@@ -2,4 +2,4 @@ export * from './useGetAllReviews';
 
 export * from './useCreateReview';
 
-export * from './useUpdateReview';
+export * from './useUpdateReviewById';

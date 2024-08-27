@@ -1,6 +1,7 @@
 import {EpicDependencies} from "@/types";
-import {CREATE_REVIEW_MUTATION} from "@/domain/Review/graphql/mutations/createReview";
+import {CREATE_REVIEW_MUTATION, CreateReviewResponse} from "@/domain/Review/graphql/mutations/createReview";
 import {ReviewActions} from "@/redux";
+import {AllReviewsResponse, mapperReviewDefaultToReview, QUERY_ALL_REVIEWS} from "@/domain";
 
 export interface CreateReview {
     title: string;
@@ -22,7 +23,7 @@ export const useCreateReview = async ({
                                           userReviewerId,
                                       }: UseCreateReview) => {
     try {
-        const {data} = await client.mutate({
+        await client.mutate({
             mutation: CREATE_REVIEW_MUTATION,
             variables: {
                 input: {
@@ -35,9 +36,15 @@ export const useCreateReview = async ({
                     },
                 },
             },
+        })
+
+        // I could create one more layer of abstraction here like SERVICES and refactor this to be more readable
+        const {data} = await client.query<AllReviewsResponse>({
+            query: QUERY_ALL_REVIEWS,
         });
 
-        return ReviewActions.loaded({data});
+        return ReviewActions.loaded({data: mapperReviewDefaultToReview(data)});
+
     } catch (err) {
         return ReviewActions.loadError();
     }

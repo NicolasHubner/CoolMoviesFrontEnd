@@ -1,5 +1,27 @@
 import {gql} from "@apollo/client";
 
+export interface CreateReviewInput {
+    title: string;
+    body: string;
+    rating: number;
+    movieId: string;
+    userReviewerId: string;
+}
+
+export interface CreateReviewResponse {
+    createMovieReview: {
+        movieReview: {
+            nodeId: string;
+            id: string;
+            title: string;
+            body: string;
+            rating: number;
+            movieId: string;
+            userReviewerId: string;
+        }
+    }
+}
+
 export const CREATE_REVIEW_MUTATION = gql`
     mutation CreateMovieReview {
         createMovieReview(

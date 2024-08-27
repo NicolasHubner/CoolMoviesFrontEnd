@@ -3,7 +3,7 @@ import {combineEpics, Epic, StateObservable} from "redux-observable";
 import {RootState} from "@/store";
 import {Observable} from 'rxjs';
 import {filter, map, switchMap} from 'rxjs/operators';
-import {useCreateReview, useGetAllReviews, useUpdateReview} from "@/domain"
+import {useCreateReview, useGetAllReviews, useUpdateReviewById} from "@/domain"
 import {EpicDependencies} from "@/types";
 
 export const allReviewsEpics: Epic = (
@@ -48,7 +48,7 @@ export const updateReviewEpic = (
     action$.pipe(
         filter(ReviewActions.updateReview.match),
         switchMap(async ({payload: {data}}) =>
-            useUpdateReview({
+            useUpdateReviewById({
                 client,
                 body: data.body,
                 movieId: data.movieId,
@@ -60,4 +60,4 @@ export const updateReviewEpic = (
         )
     )
 
-export const reviewsEpics = combineEpics(allReviewsEpics, createReviewEpic);
+export const reviewsEpics = combineEpics(allReviewsEpics, createReviewEpic, updateReviewEpic);
