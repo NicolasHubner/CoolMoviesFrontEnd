@@ -41,7 +41,7 @@ export const ReviewSlice = createSlice({
 
 export const {actions, reducer} = ReviewSlice;
 
-export type ReviewSliceActionsType = typeof actions;
+export type ReviewSliceActionsType = typeof actions
 
 export {reducer as ReviewReducer};
 

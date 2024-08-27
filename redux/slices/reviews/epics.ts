@@ -60,4 +60,8 @@ export const updateReviewEpic = (
         )
     )
 
-export const reviewsEpics = combineEpics(allReviewsEpics, createReviewEpic, updateReviewEpic);
+// I was having some problems to make this work, so I had to use any
+// https://stackoverflow.com/questions/47227668/combineepics-using-typescript-gives-type-error
+
+
+export const reviewsEpics = combineEpics<any>(allReviewsEpics, createReviewEpic, updateReviewEpic);
