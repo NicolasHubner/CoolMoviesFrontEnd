@@ -1,3 +1,5 @@
+import {gql} from "@apollo/client";
+
 export interface CreateUserVariables {
     name: string
 }
@@ -12,7 +14,7 @@ export interface CreateUserResponse {
 }
 
 
-export const MUTATION_CREATE_USER = `
+export const MUTATION_CREATE_USER = gql`
 mutation CreateUser($name: String!) {
     createUser(input: { user: { name: $name } }) {
         user {
