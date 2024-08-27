@@ -1,8 +1,8 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {ReviewDefault} from "@/domain/Review";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {Review, UpdateReview} from "@/domain/Review";
 
 interface ReviewState {
-    fetchData: ReviewDefault[] | string[];
+    fetchData: Review[] | string[];
 }
 
 const initialState: ReviewState = {
@@ -13,24 +13,34 @@ export const ReviewSlice = createSlice({
     name: 'reviews',
     initialState,
     reducers: {
-        fetchAllReviews: () => {
+        // Action to fetch all reviews (you may handle this in an epic or thunk)
+        fetchAllReviews: (state) => {
+            // Action logic goes here (if any)
         },
-        loaded: (state, action) => {
+        // Action when data is successfully loaded
+        loaded: (state, action: PayloadAction<{ data: Review[] }>) => {
             state.fetchData = action.payload.data;
         },
+        // Action when there is an error loading data
         loadError: (state) => {
             state.fetchData = ['Error Fetching :('];
         },
-        clearAllReviews: (state, action) => {
+        // Action to clear all reviews
+        clearAllReviews: (state) => {
             state.fetchData = [];
         },
-        addReview: (state, action) => {
-            state.fetchData = [...state.fetchData, action.payload.data];
-
+        // Action to add a new review
+        addReview: (state, action: PayloadAction<{ data: Review }>) => {
+            state.fetchData = [...state.fetchData, action.payload.data] as Review[];
         },
-        //Responsible for updating one review and show all reviews
-        updateReview: (state, action) => {
-            state.fetchData = action.payload.data;
+        // Action to update a review and show all reviews
+        updateReview: (state, action: PayloadAction<{ data: UpdateReview }>) => {
+            state.fetchData = [...state.fetchData.map((review) => {
+                if ((review as Review).id === (action.payload.data as Review).id) {
+                    return action.payload.data;
+                }
+                return review;
+            })] as Review[];
         },
     },
 });

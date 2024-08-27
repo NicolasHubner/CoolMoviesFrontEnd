@@ -1,10 +1,10 @@
 import {configureStore} from '@reduxjs/toolkit';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
-import {movieEpics, MovieReducer} from '@/redux';
+import {movieEpics, MovieReducer, ReviewReducer, reviewsEpics} from '@/redux';
 import {combineEpics, createEpicMiddleware} from 'redux-observable';
 import {CreateStoreOptions} from "@/types";
 
-const rootEpic = combineEpics(movieEpics);
+const rootEpic = combineEpics(movieEpics, reviewsEpics);
 
 export const createStore = ({epicDependencies}: CreateStoreOptions): ReturnType<typeof configureStore> => {
     const epicMiddleware = createEpicMiddleware({
@@ -15,7 +15,8 @@ export const createStore = ({epicDependencies}: CreateStoreOptions): ReturnType<
         middleware: (getDefaultMiddleware) =>
             getDefaultMiddleware().concat(epicMiddleware),
         reducer: {
-            example: MovieReducer,
+            movies: MovieReducer,
+            reviews: ReviewReducer,
         },
     });
 
@@ -30,4 +31,5 @@ export type RootState = ReturnType<ReturnType<typeof createStore>['getState']>;
 export type AppDispatch = ReturnType<typeof createStore>['dispatch'];
 
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
 export const useAppDispatch = () => useDispatch<AppDispatch>();
