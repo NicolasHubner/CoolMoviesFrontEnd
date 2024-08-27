@@ -1,7 +1,7 @@
 import {EpicDependencies} from "@/types";
 import {
     AllReviewsResponse,
-    mapperReviewDefaultToReview,
+    mapperReviewsDefaultToReview,
     QUERY_ALL_REVIEWS,
     UPDATE_REVIEW_MUTATION,
     UpdateReview
@@ -40,7 +40,7 @@ export const useUpdateReviewById = async ({
             query: QUERY_ALL_REVIEWS,
         });
 
-        return ReviewActions.loaded({data: mapperReviewDefaultToReview(data)});
+        return ReviewActions.loaded({data: mapperReviewsDefaultToReview(data)});
 
     } catch (err) {
         return ReviewActions.loadError();

@@ -1,7 +1,11 @@
 import {EpicDependencies} from "@/types";
 import {CREATE_REVIEW_MUTATION, CreateReviewResponse} from "@/domain/Review/graphql/mutations/createReview";
 import {ReviewActions} from "@/redux";
-import {AllReviewsResponse, mapperReviewDefaultToReview, QUERY_ALL_REVIEWS} from "@/domain";
+import {
+    AllReviewsResponse,
+    mapperReviewsDefaultToReview,
+    QUERY_ALL_REVIEWS
+} from "@/domain";
 
 export interface CreateReview {
     title: string;
@@ -43,7 +47,7 @@ export const useCreateReview = async ({
             query: QUERY_ALL_REVIEWS,
         });
 
-        return ReviewActions.loaded({data: mapperReviewDefaultToReview(data)});
+        return ReviewActions.loaded({data: mapperReviewsDefaultToReview(data)});
 
     } catch (err) {
         return ReviewActions.loadError();

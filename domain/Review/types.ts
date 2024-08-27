@@ -5,6 +5,10 @@ export interface Review {
     rating: number;
     movieId: string;
     userReviewerId?: string;
+    user?: {
+        id: string;
+        name: string;
+    };
 }
 
 export interface UpdateReview extends Review {

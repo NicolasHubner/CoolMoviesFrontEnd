@@ -13,7 +13,6 @@ export const allReviewsEpics: Epic = (
 ) =>
     action$.pipe(
         filter(ReviewActions.fetchAllReviews.match),
-
         switchMap(async () =>
             useGetAllReviews({client})
         ),

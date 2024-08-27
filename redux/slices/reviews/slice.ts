@@ -13,9 +13,7 @@ export const ReviewSlice = createSlice({
     name: 'reviews',
     initialState,
     reducers: {
-        // Action to fetch all reviews (you may handle this in an epic or thunk)
         fetchAllReviews: (state) => {
-            // Action logic goes here (if any)
         },
         // Action when data is successfully loaded
         loaded: (state, action: PayloadAction<{ data: Review[] }>) => {
@@ -31,7 +29,6 @@ export const ReviewSlice = createSlice({
         },
         // Action to add a new review
         addReview: (state, action: PayloadAction<{ data: Review }>) => {
-            state.fetchData = [...state.fetchData, action.payload.data] as Review[];
         },
         updateReview: (state, action: PayloadAction<{ data: UpdateReview }>) => {
             state.fetchData = [...state.fetchData, action.payload.data] as Review[];
@@ -39,7 +36,7 @@ export const ReviewSlice = createSlice({
     },
 });
 
-export const {actions, reducer} = ReviewSlice;
+const {actions, reducer} = ReviewSlice;
 
 export type ReviewSliceActionsType = typeof actions
 
