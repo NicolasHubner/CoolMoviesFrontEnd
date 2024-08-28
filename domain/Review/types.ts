@@ -9,6 +9,14 @@ export interface Review {
         id: string;
         name: string;
     };
+    movie?: {
+        id: string;
+        title: string;
+        movieDirectorId: string;
+        userCreatorId: string;
+        releaseDate: string;
+        imgUrl: string;
+    };
 }
 
 export interface UpdateReview extends Review {
@@ -37,6 +45,15 @@ export interface AllReviewsResponse {
             userByUserReviewerId: {
                 name: string;
                 id: string;
+            }
+            movieByMovieId: {
+                nodeId: string;
+                id: string;
+                title: string;
+                movieDirectorId: string;
+                userCreatorId: string;
+                releaseDate: string;
+                imgUrl: string;
             }
         }[]
     };

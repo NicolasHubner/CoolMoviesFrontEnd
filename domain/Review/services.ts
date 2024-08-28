@@ -11,6 +11,14 @@ export const mapperReviewsDefaultToReview = (reviews: AllReviewsResponse): Revie
         user: {
             id: review.userByUserReviewerId.id,
             name: review.userByUserReviewerId.name
+        },
+        movie: {
+            id: review.movieByMovieId.id,
+            title: review.movieByMovieId.title,
+            movieDirectorId: review.movieByMovieId.movieDirectorId,
+            userCreatorId: review.movieByMovieId.userCreatorId,
+            releaseDate: review.movieByMovieId.releaseDate,
+            imgUrl: review.movieByMovieId.imgUrl
         }
     }))
 }

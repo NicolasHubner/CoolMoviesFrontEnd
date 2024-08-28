@@ -8,8 +8,10 @@ type ScreenContainer = {
 
 export const ScreenContainer: React.FC<ScreenContainer> = ({children}) => {
     return (
-        <Container sx={{marginTop: 12, display: 'flex', flexDirection: 'column', alignItems: 'center'}}
-                   css={style.root}>
+        <Container
+            maxWidth={'lg'}
+            disableGutters
+            css={style.root}>
             {children}
         </Container>
     )
@@ -17,10 +19,11 @@ export const ScreenContainer: React.FC<ScreenContainer> = ({children}) => {
 
 const style = {
     root: css({
-        height: '100vh',
+        minHeight: '100vh',
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        marginTop: 48,
     })
 }

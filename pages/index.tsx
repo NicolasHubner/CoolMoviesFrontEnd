@@ -73,7 +73,6 @@ const Home: NextPage = () => {
 const styles = {
     body: css({
         alignSelf: 'stretch',
-        padding: 32,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

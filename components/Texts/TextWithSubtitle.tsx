@@ -1,6 +1,7 @@
 import React from "react";
 import {Typography} from "@mui/material";
 import {css} from "@emotion/react";
+import {themeCustom} from "@/styles/theme";
 
 type TextWithSubtitle = {
     Title: string;
@@ -31,5 +32,9 @@ const styles = {
         maxWidth: 600,
         margin: '24px 0',
         color: 'rgba(0, 0, 0, 0.6)',
+        [themeCustom.breakpoints.down('md')]: {
+            lineHeight: 1.5,
+            maxWidth: '80%',
+        }
     }),
 }

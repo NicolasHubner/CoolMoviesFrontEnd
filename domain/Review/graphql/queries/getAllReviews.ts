@@ -6,15 +6,24 @@ export const QUERY_ALL_REVIEWS = gql`
             totalCount
             nodes {
                 nodeId
+            id
+            title
+            body
+            rating
+            movieId
+            userReviewerId
+            userByUserReviewerId {
+                name
+                id
+            }
+            movieByMovieId {
+                nodeId
                 id
                 title
-                body
-                rating
-                movieId
-                userReviewerId
-                userByUserReviewerId {
-                    name
-                    id
+                movieDirectorId
+                userCreatorId
+                releaseDate
+                imgUrl
                 }
             }
         }
