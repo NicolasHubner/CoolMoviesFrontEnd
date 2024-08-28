@@ -13,7 +13,7 @@ const initialState: ExampleState = {
 
 export const MovieSlice = createSlice({
     initialState,
-    name: 'example',
+    name: 'movies',
     reducers: {
         fetchMovies: () => {
         },
