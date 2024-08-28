@@ -13,9 +13,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import Link from "next/link";
 import {useRouter} from "next/navigation";
 import {useCallback} from "react";
+import {colorBackGroundNavBar, colorTypographyDark} from "@/styles/colors";
 
 interface Props {
     /**
@@ -42,7 +42,7 @@ export function NavBar(props: Props) {
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{textAlign: 'center'}}>
             <Typography variant="h6" sx={{my: 2}}>
-                MUI
+                Coolmovies Frontend
             </Typography>
             <Divider/>
             <List>
@@ -81,7 +81,7 @@ export function NavBar(props: Props) {
     return (
         <Box sx={{display: 'flex', height: 50}}>
             <CssBaseline/>
-            <AppBar component="nav">
+            <AppBar component="nav" sx={{backgroundColor: colorBackGroundNavBar}}>
                 <Toolbar>
                     <IconButton
                         color="inherit"
@@ -95,7 +95,7 @@ export function NavBar(props: Props) {
                     <Typography
                         variant="h6"
                         component="div"
-                        sx={{flexGrow: 1, display: {xs: 'none', sm: 'block'}}}
+                        sx={{flexGrow: 0.45, display: {xs: 'none', sm: 'block'}, color: colorTypographyDark}}
                     >
                         Coolmovies Frontend
                     </Typography>
@@ -103,7 +103,11 @@ export function NavBar(props: Props) {
                         {navItems.map((item) => (
                             <Button key={item} sx={{color: '#fff'}}
                                     onClick={() => handleNavItemClick(item)}>
-                                {item}
+                                <Typography sx={{fontWeight: 'bold', color: colorTypographyDark}}>
+
+                                    {item}
+                                </Typography>
+
                             </Button>
                         ))}
                     </Box>
