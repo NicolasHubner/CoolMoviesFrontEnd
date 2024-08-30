@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect, useState} from "react";
-import {Button, Icon, Modal, TextField, Typography} from "@mui/material";
+import React, {useEffect} from "react";
+import {Modal, TextField, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
 import {css} from "@emotion/react";
 import {Rating} from '@mui/material';
@@ -58,6 +58,7 @@ export const AddEditModal: React.FC<AddEditModalProps> = ({
                 }))
             );
         }
+        //eslint-disable-next-line
     }, [review]);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

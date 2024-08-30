@@ -121,6 +121,7 @@ const Reviews = () => {
 
     useEffect(() => {
         reviewState.success && handleCloseAddEditModal()
+        //eslint-disable-next-line
     }, [reviewState.success])
 
     return (
