@@ -5,7 +5,7 @@ import {TextWithSubtitle} from "@/components/Texts/TextWithSubtitle";
 const Contact: React.FC = () => {
     return (
         <ScreenContainer>
-            <TextWithSubtitle Title={'Contact'}/>
+            <TextWithSubtitle Title={'Contact'} Subtitle={'You can find me on hubnersantos@aol.com =)'}/>
         </ScreenContainer>
     )
 }

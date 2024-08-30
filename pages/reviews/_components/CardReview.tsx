@@ -1,11 +1,12 @@
 import React from 'react';
-import {Typography, Card, CardContent, CardHeader} from '@mui/material';
+import {Typography, Card, CardContent, CardHeader, Rating} from '@mui/material';
 import {css} from '@emotion/react';
 import {Review} from "@/domain";
 import {themeCustom} from "@/styles/theme";
 import IconButton from "@mui/material/IconButton";
 import {ArrowForward} from "@mui/icons-material";
 import EditIcon from "@/components/Icon/edit";
+import Box from "@mui/material/Box";
 
 type RenderCardViewProps = {
     review: Review;
@@ -34,6 +35,14 @@ const RenderCardReview: React.FC<RenderCardViewProps> = ({
                 <Typography variant="body1" color="textSecondary" css={styles.cardBody}>
                     {review.body?.length > 180 ? `${review.body.slice(0, 180)}...` : review.body}
                 </Typography>
+
+                <Rating
+                    name="read-only"
+                    value={review.rating}
+                    readOnly
+                    size="small"
+                />
+
 
                 <IconButton css={styles.editButton}
                             onClick={() => {
@@ -78,7 +87,7 @@ const styles = {
         }
     }),
     cardBody: css({
-        width: '90%'
+        width: '90%',
     }),
     cardContent: css({
         flexGrow: 1,
