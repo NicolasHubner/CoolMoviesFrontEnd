@@ -1,5 +1,5 @@
 import {Observable} from 'rxjs';
-import {combineEpics, StateObservable} from "redux-observable";
+import {StateObservable} from "redux-observable";
 import {RootState} from "@/store";
 import {EpicDependencies} from "@/types";
 import {UserActions, UserSliceActionsType} from "@/redux";

@@ -1,24 +1,47 @@
 import {RootState, useAppDispatch, useAppSelector} from "@/store";
 import {ScreenContainer} from "@/components/Container/ScreenContainer";
 import {TextWithSubtitle} from "@/components/Texts/TextWithSubtitle";
-import React from "react";
-import {ReviewActions} from "@/redux";
+import React, {useEffect, useState} from "react";
+import {ReviewActions, UserActions} from "@/redux";
 import {css} from "@emotion/react";
 import Box from "@mui/material/Box";
 import {Review} from "@/domain";
 import {themeCustom} from "@/styles/theme";
 import {TitleReview, CardReview} from "./_components";
+import DetailsModal from "@/pages/reviews/_components/DetailsModal";
+import {AddEditModal} from "@/pages/reviews/_components/AddEditModal";
+
+export type ReviewEditOrAdd = {
+    title: string;
+    body: string;
+    userName: string;
+    rating: number;
+}
 
 const Reviews = () => {
     const dispatch = useAppDispatch();
 
+    const [openModal, setOpenModal] = React.useState(false)
+
+    const [openAddEditModal, setOpenAddEditModal] = React.useState(false)
+
+    const [review, setReview] = React.useState<Review | null>(null)
+
+    const [reviewEditOrAdd, setReviewEditOrAdd] = useState<ReviewEditOrAdd>({
+        title: '',
+        body: '',
+        userName: '',
+        rating: 0
+    });
+
+    const [movieId, setMovieId] = React.useState<string>('')
 
     const reviewState = useAppSelector((state: RootState) => state.reviews);
 
     React.useEffect(() => {
         dispatch(ReviewActions.fetchAllReviews())
-        return () => dispatch(ReviewActions.clearAllReviews())
 
+        return () => dispatch(ReviewActions.clearAllReviews())
         //eslint-disable-next-line
     }, [])
 
@@ -35,6 +58,71 @@ const Reviews = () => {
             , {})
     }, [reviewState.fetchData])
 
+    const handleAddReview = ({
+                                 userName,
+                                 title,
+                                 body,
+                                 rating,
+                                 movieId
+                             }: {
+        userName: string
+        title: string
+        body: string
+        rating: number
+        movieId: string
+    }) => {
+        dispatch(ReviewActions.addReview({
+            data: {
+                review: {
+                    title,
+                    body,
+                    rating,
+                    movieId
+                },
+                userName
+            }
+        }))
+    }
+
+    const handleEditReview = ({
+                                  title,
+                                  body,
+                                  rating,
+                              }: {
+        title: string
+        body: string
+        rating: number
+    }) => {
+        dispatch(ReviewActions.updateReview({
+                data: {
+                    title,
+                    body,
+                    rating,
+                    reviewId: review?.id ?? '',
+                    movieId: review?.movieId ?? ''
+                }
+            })
+        )
+    }
+
+    const handleCloseAddEditModal = () => {
+        setOpenAddEditModal(false)
+        setReviewEditOrAdd({
+            title: '',
+            body: '',
+            userName: '',
+            rating: 0
+        })
+        setReview(null)
+
+        dispatch(ReviewActions.startMutation())
+    }
+
+
+    useEffect(() => {
+        reviewState.success && handleCloseAddEditModal()
+    }, [reviewState.success])
+
     return (
         <ScreenContainer>
             <TextWithSubtitle Title={'Reviews'}
@@ -44,13 +132,37 @@ const Reviews = () => {
             {Object.keys(groupedMovies).map((key: string) => {
                 return (
                     <Box key={key} css={styles.ViewComponentContainerTitleReviews}>
-                        {TitleReview(key)}
+                        {TitleReview(key, () => {
+                            setReview(null)
+                            setOpenAddEditModal(true)
+                            setMovieId(groupedMovies[key][0].movieId)
+                        })}
                         <Box css={styles.ViewComponentReviews}>
-                            {groupedMovies[key].map((item: Review) => CardReview(item))}
+                            {groupedMovies[key].map((item: Review, index: number) => CardReview({
+                                review: item,
+                                setOpenModal,
+                                setDetailReview: setReview,
+                                setEditModal: setOpenAddEditModal,
+                                key: index.toString() + item.id
+                            }))}
                         </Box>
                     </Box>
                 )
             })}
+
+            <AddEditModal
+                dispatch={dispatch}
+                open={openAddEditModal}
+                handleClose={handleCloseAddEditModal}
+                review={review}
+                handleAddReview={handleAddReview}
+                handleEditReview={handleEditReview}
+                movieId={movieId}
+                reviewEditOrAdd={reviewEditOrAdd}
+                setReviewEditOrAdd={setReviewEditOrAdd}
+            />
+
+            <DetailsModal handleClose={() => setOpenModal(false)} open={openModal} review={review}/>
 
         </ScreenContainer>
     )

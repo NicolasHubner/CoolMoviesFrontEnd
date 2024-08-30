@@ -6,13 +6,15 @@ import {
     mapperReviewsDefaultToReview,
     QUERY_ALL_REVIEWS
 } from "@/domain";
+import {CreateUserResponse, MUTATION_CREATE_USER} from "@/domain/User/graphql/mutation";
+import {Alert} from "@mui/material";
 
 export interface CreateReview {
     title: string;
     body: string;
     rating: number;
     movieId: string;
-    userReviewerId: string;
+    userName: string;
 }
 
 interface UseCreateReview extends EpicDependencies, CreateReview {
@@ -24,32 +26,37 @@ export const useCreateReview = async ({
                                           body,
                                           rating,
                                           movieId,
-                                          userReviewerId,
+                                          userName
                                       }: UseCreateReview) => {
     try {
+        const {data: dataUserCreated} = await client.mutate<CreateUserResponse>({
+            mutation: MUTATION_CREATE_USER,
+            variables: {
+                name: userName,
+            },
+        })
+
         await client.mutate({
             mutation: CREATE_REVIEW_MUTATION,
             variables: {
-                input: {
-                    movieReview: {
-                        title,
-                        body,
-                        rating,
-                        movieId,
-                        userReviewerId,
-                    },
-                },
+                title,
+                body,
+                rating,
+                movieId,
+                userReviewerId: dataUserCreated?.createUser.user.id ?? '',
             },
         })
+
 
         // I could create one more layer of abstraction here like SERVICES and refactor this to be more readable
         const {data} = await client.query<AllReviewsResponse>({
             query: QUERY_ALL_REVIEWS,
+            fetchPolicy: 'no-cache',
         });
 
-        return ReviewActions.loaded({data: mapperReviewsDefaultToReview(data)});
-
+        return ReviewActions.loadedSuccess({data: mapperReviewsDefaultToReview(data)});
     } catch (err) {
+        window.alert('Error creating review');
         return ReviewActions.loadError();
     }
 }

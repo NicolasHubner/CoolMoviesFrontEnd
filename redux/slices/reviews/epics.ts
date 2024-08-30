@@ -29,11 +29,11 @@ export const createReviewEpic = (
         switchMap(async ({payload: {data}}) =>
             useCreateReview({
                 client,
-                body: data.body,
-                movieId: data.movieId,
-                rating: data.rating,
-                title: data.title,
-                userReviewerId: data.userReviewerId ?? ''
+                body: data.review.body,
+                movieId: data.review.movieId ?? '',
+                rating: data.review.rating,
+                title: data.review.title,
+                userName: data.userName
             })
         )
     )
@@ -54,7 +54,6 @@ export const updateReviewEpic = (
                 rating: data.rating,
                 title: data.title,
                 reviewId: data.reviewId,
-                userReviewerId: data.userReviewerId
             })
         )
     )

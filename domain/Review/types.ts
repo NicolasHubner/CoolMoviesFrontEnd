@@ -3,7 +3,7 @@ export interface Review {
     title: string;
     body: string;
     rating: number;
-    movieId: string;
+    movieId?: string;
     userReviewerId?: string;
     user?: {
         id: string;

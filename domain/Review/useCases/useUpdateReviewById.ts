@@ -23,24 +23,21 @@ export const useUpdateReviewById = async ({
         await client.mutate<AllReviewsResponse>({
             mutation: UPDATE_REVIEW_MUTATION,
             variables: {
-                input: {
-                    movieReviewPatch: {
-                        title,
-                        body,
-                        rating,
-                        movieId,
-                    },
-                    id: reviewId,
-                },
+                title,
+                body,
+                rating,
+                movieId,
+                id: reviewId,
             },
         });
 
         // I could create one more layer of abstraction here like SERVICES and refactor this to be more readable
         const {data} = await client.query<AllReviewsResponse>({
             query: QUERY_ALL_REVIEWS,
+            fetchPolicy: 'no-cache',
         });
 
-        return ReviewActions.loaded({data: mapperReviewsDefaultToReview(data)});
+        return ReviewActions.loadedSuccess({data: mapperReviewsDefaultToReview(data)});
 
     } catch (err) {
         return ReviewActions.loadError();
