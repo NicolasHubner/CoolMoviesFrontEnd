@@ -8,6 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import {Close} from "@mui/icons-material";
 import {Review} from "@/domain";
 import {ReviewEditOrAdd} from "@/pages/reviews";
+import {DefaultButton} from "@/components/Buttons/DefaultButton";
 
 
 type AddEditModalProps = {
@@ -139,9 +140,9 @@ export const AddEditModal: React.FC<AddEditModalProps> = ({
                         onChange={(e) => setReviewEditOrAdd({...reviewEditOrAdd, body: e.target.value})}
                     />
 
-                    <Button type="submit" variant="contained" color="primary" css={styles.submitButton}>
+                    <DefaultButton onClick={(e) => handleSubmit(e)}>
                         {review ? 'Update' : 'Create'}
-                    </Button>
+                    </DefaultButton>
                 </form>
             </Box>
         </Modal>
@@ -189,7 +190,19 @@ const styles = {
     ),
     submitButton: css(
         {
-            marginTop: 16,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '8px 16px',
+            fontSize: '16px',
+            textTransform: 'none',
+            boxShadow: 'none',
+            backgroundColor: 'black',
+            color: 'white', // Text color
+            '&:hover': {
+                backgroundColor: 'rgba(0, 0, 0, 0.1)', // Example hover color
+                color: 'black' // Text color on hover
+            }
         }
     ),
 };

@@ -5,6 +5,7 @@ import {themeCustom} from "@/styles/theme";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import {AddBox} from "@mui/icons-material";
+import {DefaultButton} from "@/components/Buttons/DefaultButton";
 
 const renderTextTitleReview = (title: string, onClick = () => {
 }) => {
@@ -14,29 +15,12 @@ const renderTextTitleReview = (title: string, onClick = () => {
                 {title}
             </Typography>
 
-            <Button
-                variant="contained"
-                color="primary"
-                startIcon={<AddBox/>}
+            <DefaultButton
                 onClick={onClick}
-                sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '8px 16px',
-                    fontSize: '16px',
-                    textTransform: 'none',
-                    boxShadow: 'none',
-                    backgroundColor: 'black',
-                    color: 'white', // Text color
-                    '&:hover': {
-                        backgroundColor: 'rgba(0, 0, 0, 0.1)', // Example hover color
-                        color: 'black' // Text color on hover
-                    }
-                }}
+                icon={<AddBox/>}
             >
                 Add Review
-            </Button>
+            </DefaultButton>
 
         </Box>
 
@@ -56,12 +40,6 @@ const styles = {
             alignItems: 'center',
             marginBottom: '2em',
         }
-    }),
-    IconStyle: css({
-        color: 'gray',
-        fontSize: '1em',
-        width: '4em',
-        height: '2em',
     }),
     textTitleReviews: css({
         fontWeight: 600, // Increased weight for better emphasis
